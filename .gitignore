@@ -1,0 +1,21 @@
+# IDEs
+.idea/
+*iml
+
+# NPM dependencies
+node_modules/
+
+# Misc
+npm-debug.log
+
+# Output
+dist/
+coverage/
+/build/info.txt
+/build
+/npm-debug*
+
+.DS_Store
+.tern-project
+.undodir/
+Session.vim
