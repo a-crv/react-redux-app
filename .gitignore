@@ -15,6 +15,7 @@ coverage/
 /build
 /npm-debug*
 
+.env
 .DS_Store
 .tern-project
 .undodir/

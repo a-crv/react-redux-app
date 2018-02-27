@@ -10,7 +10,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch('/users')
+    fetch('/api/users')
       .then(res => res.json())
       .then(users => this.setState({ users }))
       .catch(error => console.log(error.message));

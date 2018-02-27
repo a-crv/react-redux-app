@@ -1,31 +1,45 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+const express = require('express');
+const env = require('dotenv').config();
 
-var users = require('./routes/users');
+const path = require('path');
+const logger = require('morgan');
+const favicon = require('serve-favicon');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 
-var app = express();
+const mongoose = require('mongoose');
+
+const authors = require('./rest/authors');
+
+const app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+// app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'jade');
+
+// mongodb connection
+const {
+  parsed: {
+    DB_NAME: dbname,
+    DB_USERNAME: dbuser,
+    DB_PASSWORD: dbpassword
+  }
+} = env
+mongoose.connect(`mongodb://${dbuser}:${dbpassword}@ds141766.mlab.com:41766/${dbname}`);
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+// app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api/users', users);
+app.use('/api/authors', authors);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
+  const err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
