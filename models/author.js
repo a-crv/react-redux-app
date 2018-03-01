@@ -4,8 +4,14 @@ const Schema = mongoose.Schema;
 const authorSchema = new Schema({
   _id: mongoose.Schema.Types.ObjectId,
   name: {
-    firstName: String,
-    lastName: String
+    firstName: {
+      type: String,
+      required: true
+    },
+    lastName: {
+      type: String,
+      required: true
+    }
   },
   aboutAuthor: String,
   created: {
