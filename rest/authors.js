@@ -35,10 +35,10 @@ router
   });
 
 router
-  .route('/:id')
+  .route('/:name')
   .get((req, res) => {
     console.log('GET /authors/:name');
-    const authorName = req.params.name;
+    const { params: {name: authorName} } = req;
 
     Author.findOne({
       name: {
