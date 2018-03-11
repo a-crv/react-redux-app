@@ -10,7 +10,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch('/api/users')
+    fetch('/api/authors')
       .then(res => res.json())
       .then(users => this.setState({ users }))
       .catch(error => console.log(error.message));
@@ -28,7 +28,11 @@ class App extends Component {
         </Button>
         <p className="App-intro">
           {
-            this.state.error || this.state.users.map(user => <li key={user.id}>{user.name}</li>)
+            this.state.error || this.state.users.map(user =>
+              <li key={user.id}>
+                {`${user.name.firstName} ${user.name.lastName}`}
+              </li>
+            )
           }
         </p>
       </div>
