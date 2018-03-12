@@ -1,7 +1,26 @@
 import React, { Component } from 'react';
+import { Switch, Route } from 'react-router-dom'
 import Header from '../Header';
 import Sidebar from '../Sidebar';
 import './styles.css';
+
+const Home = () => (
+  <div>
+    <h2>Home</h2>
+  </div>
+);
+
+const Home1 = () => (
+  <div>
+    <h2>Home1</h2>
+  </div>
+);
+
+const Home2 = () => (
+  <div>
+    <h2>Home2</h2>
+  </div>
+);
 
 class App extends Component {
   state = {
@@ -21,6 +40,11 @@ class App extends Component {
       <div>
         <Header />
         <Sidebar />
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/1" component={Home1} />
+          <Route path="/2" component={Home2} />
+        </Switch>
         <p>
           {
             this.state.error || this.state.users.map(user => (
