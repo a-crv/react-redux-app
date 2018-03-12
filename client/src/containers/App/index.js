@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Button from 'material-ui/Button';
+import Header from '../Header';
+import Sidebar from '../Sidebar';
+import './styles.css';
 
 class App extends Component {
   state = {
@@ -18,21 +18,19 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <Button variant="raised" color="primary">
-          Hello World
-        </Button>
-        <p className="App-intro">
+      <div>
+        <Header />
+        <Sidebar />
+        <p>
           {
-            this.state.error || this.state.users.map(user =>
+            this.state.error || this.state.users.map(user => (
               <li key={user.id}>
                 {`${user.name.firstName} ${user.name.lastName}`}
+                <div>
+                  {user.aboutAuthor}
+                </div>
               </li>
-            )
+            ))
           }
         </p>
       </div>

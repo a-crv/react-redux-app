@@ -1,0 +1,24 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true,
+    "jest": true
+  },
+  "parser": "babel-eslint",
+  "extends": "airbnb",
+  "rules": {
+    "linebreak-style": [
+      "warn",
+      "windows"
+    ],
+    "comma-dangle": [
+      "warn",
+      "never"
+    ],
+    "function-paren-newline": ["error", "consistent"],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "no-use-before-define": ["error", { "functions": false, "classes": true }],
+    "react/forbid-prop-types": ["any", "array", "object"]
+  }
+}
