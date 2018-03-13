@@ -1,6 +1,6 @@
 .logo {
   animation: logo-move infinite 20s linear;
-  height: 80px;
+  height: 40px;
 }
 
 @keyframes logo-move {

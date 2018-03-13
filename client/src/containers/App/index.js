@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Switch, Route } from 'react-router-dom'
-import Header from '../Header';
-import Sidebar from '../Sidebar';
+import { Switch, Route } from 'react-router-dom';
+import Header from '../../components/Header';
+import Sidebar from '../../components/Sidebar';
 import './styles.css';
 
 const Home = () => (
