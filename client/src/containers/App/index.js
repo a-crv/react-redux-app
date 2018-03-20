@@ -1,15 +1,22 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from 'material-ui/styles';
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
-import Content from '../../components/Content';
-import './styles.css';
+import Main from '../../components/Main';
+import styles from './styles';
 
-const App = () => (
-  <div>
+const App = ({ classes }) => (
+  <div className={classes.page}>
     <Header />
     <Sidebar />
-    <Content />
+    <Main />
   </div>
 );
 
-export default App;
+App.propTypes = {
+  classes: PropTypes.object.isRequired
+
+};
+
+export default withStyles(styles)(App);

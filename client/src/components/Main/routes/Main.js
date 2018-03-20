@@ -7,23 +7,19 @@ import {
 } from 'recompose';
 
 const Main = ({ error, users }) => (
-  <p>
-    {
-      error || users.map(user => (
-        <li key={user.id}>
-          {`${user.name.firstName} ${user.name.lastName}`}
-          <div>
-            {user.aboutAuthor}
-          </div>
-        </li>
-      ))
-    }
-  </p>
+  error || users.map(user => (
+    <li key={user.id}>
+      {`${user.name.firstName} ${user.name.lastName}`}
+      <div>
+        {user.aboutAuthor}
+      </div>
+    </li>
+  ))
 );
 
 Main.propTypes = {
-  error: PropTypes.string,
-  users: PropTypes.array
+  error: PropTypes.string.isRequired,
+  users: PropTypes.array.isRequired
 };
 
 export default compose(
