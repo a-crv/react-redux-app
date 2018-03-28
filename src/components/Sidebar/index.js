@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { compose, withState, withHandlers } from 'recompose';
+import { connect } from 'react-redux';
+import { compose, withHandlers } from 'recompose';
 import { Link } from 'react-router-dom';
 import { withStyles } from 'material-ui/styles';
 import Hidden from 'material-ui/Hidden';
 import Drawer from 'material-ui/Drawer';
 import Divider from 'material-ui/Divider';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
+import { toggleSidebar } from '../../actions/ui';
 import styles from './styles';
 import sidebarItems from './sidebarItems';
 
@@ -70,6 +72,7 @@ const Sidebar = ({
             <ListItemText primary={sidebarItem.name} />
           </ListItem>
         ))}
+        <button onClick={handleDrawerToggle}>Privet</button>
       </List>
     </Drawer>
   </Hidden>
@@ -80,15 +83,24 @@ Sidebar.propTypes = {
   theme: PropTypes.object.isRequired
 };
 
+const mapStateToProps = (state) => {
+  const { ui: { isOpenSidebar: mobileOpen } } = state;
+
+  return {
+    mobileOpen
+  };
+};
+
+const mapDispatchToProps = {
+  setMobileOpen: toggleSidebar
+};
+
 export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
   withStyles(styles, { withTheme: true }),
-  withState('mobileOpen', 'setMobileOpen', false),
   withHandlers({
-    handleDrawerToggle: ({
-      mobileOpen,
-      setMobileOpen
-    }) => () => {
-      setMobileOpen(!mobileOpen);
+    handleDrawerToggle: ({ setMobileOpen }) => () => {
+      setMobileOpen();
     }
   })
 )(Sidebar);
