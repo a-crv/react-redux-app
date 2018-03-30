@@ -10,8 +10,8 @@ const Main = ({ classes }) => (
     <div className={classes.toolbar} />
     <Switch>
       <Route exact path="/" component={MainContent} />
-      <Route path="/1" component={Posts} />
-      <Route path="/2" component={Chat} />
+      <Route path="/posts" component={Posts} />
+      <Route path="/chat" component={Chat} />
     </Switch>
   </main>
 );
