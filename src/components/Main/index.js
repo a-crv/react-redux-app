@@ -2,7 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
 import { withStyles } from 'material-ui/styles';
-import { Main as MainContent, Posts, Chat } from './routes';
+import {
+  Main as MainContent,
+  Stackoverflow,
+  Posts,
+  Chat
+} from './routes';
 import styles from './styles';
 
 const Main = ({ classes }) => (
@@ -10,6 +15,7 @@ const Main = ({ classes }) => (
     <div className={classes.toolbar} />
     <Switch>
       <Route exact path="/" component={MainContent} />
+      <Route path="/stackoverflow" component={Stackoverflow} />
       <Route path="/posts" component={Posts} />
       <Route path="/chat" component={Chat} />
     </Switch>
