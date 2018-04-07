@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Search from '../../SearchQuestions';
-import style from '../styles';
+import style from './styles';
 
 const Stackoverflow = ({
   classes

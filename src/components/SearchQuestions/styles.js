@@ -1,6 +1,6 @@
 const styles = {
   container: {
-    display: 'flex'
+    flexGrow: 1
   },
   searchField: {
     flexGrow: 2
