@@ -5,19 +5,21 @@ import styles from './styles';
 
 const Input = (props) => {
   const {
-    classes,
-    ...otherProps
+    id,
+    classes
   } = props;
 
   return (
     <input
+      id={id}
+      type="text"
       className={classes.main}
-      {...otherProps}
     />
   );
 };
 
 Input.propTypes = {
+  id: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired
 };
 

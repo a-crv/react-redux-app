@@ -5,7 +5,7 @@ import { compose } from 'recompose';
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 import Button from 'material-ui/Button';
-import Input from '../Input';
+import Label from '../Label';
 import styles from './styles';
 
 const Search = ({
@@ -15,17 +15,16 @@ const Search = ({
     <Grid container spacing={24}>
       <Grid item xs={6}>
         <Field
-          component={Input}
-          name="pagesize"
-          placeholder="sdf"
-          className={classes.searchField}
+          component={Label}
+          label="Имя"
+          name="title"
         />
       </Grid>
-      <Grid item xs={2}>
+      <Grid item xs={6}>
         <Field
-          component={Input}
-          name="title"
-          className={classes.searchField}
+          component={Label}
+          label="Количество запросов"
+          name="pagesize"
         />
       </Grid>
       <Grid item xs={12}>
