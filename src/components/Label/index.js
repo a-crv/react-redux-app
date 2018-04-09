@@ -6,28 +6,37 @@ import styles from './styles';
 
 const Label = (props) => {
   const {
+    type,
+    input,
     classes,
-    label: labelText,
-    input: {
-      name: fieldName
-    }
+    className,
+    label: labelText
   } = props;
 
   return (
-    <label
-      htmlFor={fieldName}
-      className={classes.label}
-    >
-      {labelText}
-      <Input id={fieldName} />
+    <label className={className}>
+      <span
+        className={classes.label}
+        title={labelText}
+      >
+        {labelText}
+      </span>
+      <Input input={input} type={type} />
     </label>
   );
 };
 
+Label.defaultProps = {
+  type: null,
+  className: null
+};
+
 Label.propTypes = {
-  classes: PropTypes.object.isRequired,
+  type: PropTypes.string,
+  className: PropTypes.object,
   label: PropTypes.string.isRequired,
-  input: PropTypes.object.isRequired
+  input: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(Label);

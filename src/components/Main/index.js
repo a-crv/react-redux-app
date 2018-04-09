@@ -15,7 +15,8 @@ const Main = ({ classes }) => (
     <div className={classes.toolbar} />
     <Switch>
       <Route exact path="/" component={MainContent} />
-      <Route path="/stackoverflow" component={Stackoverflow} />
+      <Route exact path="/stackoverflow" component={Stackoverflow} />
+      <Route path="/stackoverflow/questions" component={Posts} />
       <Route path="/posts" component={Posts} />
       <Route path="/chat" component={Chat} />
     </Switch>

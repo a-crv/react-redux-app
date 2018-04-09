@@ -5,22 +5,28 @@ import styles from './styles';
 
 const Input = (props) => {
   const {
-    id,
+    type,
+    input,
     classes
   } = props;
 
   return (
     <input
-      id={id}
-      type="text"
+      {...input}
+      type={type}
       className={classes.main}
     />
   );
 };
 
+Input.defaultProps = {
+  classes: null
+};
+
 Input.propTypes = {
-  id: PropTypes.string.isRequired,
-  classes: PropTypes.object.isRequired
+  type: PropTypes.string.isRequired,
+  input: PropTypes.object.isRequired,
+  classes: PropTypes.object
 };
 
 export default withStyles(styles)(Input);

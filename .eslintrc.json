@@ -19,6 +19,11 @@
     "function-paren-newline": ["error", "consistent"],
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "no-use-before-define": ["error", { "functions": false, "classes": true }],
-    "react/forbid-prop-types": ["any", "array", "object"]
+    "react/forbid-prop-types": ["any", "array", "object"],
+    "jsx-a11y/label-has-for": [2, {
+      "required": {
+        "some": [ "nesting", "id" ]
+      }
+    }]
   }
 }

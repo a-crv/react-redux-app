@@ -7,7 +7,16 @@ const styles = theme => ({
       position: 'relative'
     }
   },
-  toolbar: theme.mixins.toolbar
+  toolbar: {
+    ...theme.mixins.toolbar,
+    position: 'relative'
+  },
+  progress: {
+    transform: 'translate(-50%, -50%)',
+    top: '50%',
+    left: '50%',
+    position: 'absolute'
+  }
 });
 
 export default styles;
