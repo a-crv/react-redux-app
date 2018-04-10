@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
 import { withStyles } from 'material-ui/styles';
+import { Questions } from '../Stackoverflow';
 import {
   Main as MainContent,
   Stackoverflow,
@@ -16,7 +17,7 @@ const Main = ({ classes }) => (
     <Switch>
       <Route exact path="/" component={MainContent} />
       <Route exact path="/stackoverflow" component={Stackoverflow} />
-      <Route path="/stackoverflow/questions" component={Posts} />
+      <Route path="/stackoverflow/questions" component={Questions} />
       <Route path="/posts" component={Posts} />
       <Route path="/chat" component={Chat} />
     </Switch>
