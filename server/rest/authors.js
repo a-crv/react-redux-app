@@ -1,6 +1,7 @@
 const express = require('express');
-const router = express.Router();
 const mongoose = require('mongoose');
+
+const router = express.Router();
 const Author = require('../models/author');
 
 router
@@ -20,7 +21,13 @@ router
   })
   .post((req, res) => {
     console.log('POST /authors');
-    const { body: {firstName, lastName, aboutAuthor} } = req;
+    const {
+      body: {
+        firstName,
+        lastName,
+        aboutAuthor
+      }
+    } = req;
     const author = new Author({
       _id: new mongoose.Types.ObjectId(),
       name: {
@@ -38,7 +45,11 @@ router
   .route('/:name')
   .get((req, res) => {
     console.log('GET /authors/:name');
-    const { params: {name: authorName} } = req;
+    const {
+      params: {
+        name: authorName
+      }
+    } = req;
 
     Author.findOne({
       name: {
@@ -58,6 +69,7 @@ router
   .put((req, res) => {
     console.log('PUT /authors/:id');
     const authorID = req.params.id;
+    const { name, description, quantity } = req.body;
 
     Author.findOne({ id: authorID }, (error, author) => {
       if (error) {
@@ -66,13 +78,16 @@ router
       }
 
       if (author) {
-        author.name = req.body.name;
-        author.description = req.body.description;
-        author.quantity = req.body.quantity;
-        
-        author.save();
+        const newAuthor = {
+          ...author,
+          name,
+          description,
+          quantity
+        };
 
-        res.json(author);
+        newAuthor.save();
+
+        res.json(newAuthor);
         return;
       }
 

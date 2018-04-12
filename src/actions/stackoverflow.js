@@ -4,7 +4,7 @@ import {
   FETCH_STACKOVERFLOW_QUESTIONS_SUCCESS
 } from '../constants/actions';
 
-const fetchStackoverflowQuestions = (itemsCount, cb) => (dispatch) => {
+const fetchStackoverflowQuestions = itemsCount => (dispatch) => {
   dispatch({
     type: FETCH_STACKOVERFLOW_QUESTIONS_REQUEST
   });
@@ -18,8 +18,6 @@ const fetchStackoverflowQuestions = (itemsCount, cb) => (dispatch) => {
         type: FETCH_STACKOVERFLOW_QUESTIONS_SUCCESS,
         items
       });
-
-      cb();
     })
     .catch((error) => {
       dispatch({

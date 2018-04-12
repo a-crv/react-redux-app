@@ -1,6 +1,9 @@
 import SIDEBAR_WIDTH from '../../constants/ui';
 
 const styles = theme => ({
+  toolbar: {
+    justifyContent: 'space-between'
+  },
   appBar: {
     position: 'absolute',
     marginLeft: SIDEBAR_WIDTH,
