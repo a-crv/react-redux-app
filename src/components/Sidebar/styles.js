@@ -2,6 +2,7 @@ import SIDEBAR_WIDTH from '../../constants/ui';
 
 const styles = theme => ({
   drawer: {
+    minHeight: '100%',
     width: SIDEBAR_WIDTH,
     [theme.breakpoints.up('md')]: {
       position: 'relative'

@@ -1,3 +1,5 @@
+export const STACKOVERFLOW_BASE_API_URL = 'http://api.stackexchange.com/2.2';
+
 export const TOGGLE_SIDEBAR = 'TOGGLE_SIDEBAR';
 
 export const FETCH_USERS_REQUEST = 'FETCH_USERS_REQUEST';

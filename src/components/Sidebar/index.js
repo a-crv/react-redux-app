@@ -23,7 +23,7 @@ const Sidebar = ({
   const { fetching } = stackoverflowFetchedData;
 
   return ([
-    <Hidden mdUp>
+    <Hidden mdUp key="mdUp">
       <Drawer
         variant="temporary"
         anchor={theme.direction === 'rtl' ? 'right' : 'left'}
@@ -53,7 +53,7 @@ const Sidebar = ({
         </List>
       </Drawer>
     </Hidden>,
-    <Hidden smDown>
+    <Hidden smDown key="smDown">
       <Drawer
         variant="permanent"
         open
