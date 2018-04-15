@@ -5,11 +5,16 @@ import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import get from 'lodash/get';
 import { withStyles } from 'material-ui/styles';
-import fetchStackoverflowQuestions from '../../actions/stackoverflow';
+import {
+  FETCH_QUESTIONS_STACKOVERFLOW,
+  FETCH_AUTHOR_QUESTIONS_STACKOVERFLOW
+} from '../../constants/actions';
+import getStackoverflow from '../../actions/stackoverflow';
 import ReactTable from '../ReactTable';
 import TableButton from '../TableButton';
 import styles from './styles';
 
+/* eslint-disable */
 const createCustomCellWithLink = ({
   value,
   original: {
@@ -26,15 +31,20 @@ const createCustomCellWithButton = param => dispatch => ({
   original,
   ...otherProps
 }) => {
-  const necessaryField = get(original, param, null);
-  // console.log(necessaryField);
-  console.log(dispatch);
+  const authorID = get(original, param, null);
+
   return (
-    <TableButton>
+    <TableButton
+      onClick={() => dispatch(
+        FETCH_AUTHOR_QUESTIONS_STACKOVERFLOW,
+        `/users/${authorID}/questions`
+      )}
+    >
       {value}
     </TableButton>
   );
 };
+/* eslint-enable */
 
 const createColumns = dispatch => [{
   Header: 'Автор вопроса',
@@ -54,7 +64,14 @@ const createColumns = dispatch => [{
   Cell: ({
     value: tags
   }) =>
-    tags.map((tag, i) => <span key={`${tag}_${`${i}`.padStart(3, 'Oo')}`} className="slack">#{tag}</span>)
+    tags.map((tag, i) => (
+      <span
+        className="slack"
+        key={`${tag}_${`${i}`.padStart(3, '00')}`}
+      >
+        #{tag}
+      </span>
+    ))
 }];
 
 const Questions = ({
@@ -64,7 +81,6 @@ const Questions = ({
 }) => (
   <div className={classes.container}>
     <ReactTable
-      testData="test"
       data={questions}
       columns={columns}
       defaultPageSize={10}
@@ -103,7 +119,7 @@ const mapStateToProps = ({ stackoverflow: { questions } }) => ({
 export default compose(
   withRouter,
   connect(mapStateToProps, {
-    fetchQuestions: fetchStackoverflowQuestions
+    fetchQuestions: getStackoverflow
   }),
   lifecycle({
     componentWillMount() {
@@ -115,7 +131,10 @@ export default compose(
       // const filter = params.get('filter');
       const pagesize = params.get('pagesize');
 
-      fetchQuestions(pagesize);
+      fetchQuestions(
+        FETCH_QUESTIONS_STACKOVERFLOW,
+        '/questions', { pagesize }
+      );
     }
   }),
   withProps(({ fetchQuestions }) => ({

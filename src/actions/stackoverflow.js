@@ -1,25 +1,33 @@
+import reduce from 'lodash/reduce';
 import {
-  FETCH_STACKOVERFLOW_QUESTIONS_REQUEST,
-  FETCH_STACKOVERFLOW_QUESTIONS_FAILURE,
-  FETCH_STACKOVERFLOW_QUESTIONS_SUCCESS,
+  FETCH_STACKOVERFLOW_REQUEST,
+  FETCH_STACKOVERFLOW_FAILURE,
   STACKOVERFLOW_BASE_API_URL
 } from '../constants/actions';
 
-const fetchStackoverflowQuestions = itemsCount => async (dispatch) => {
+const getStackoverflow = (actionName, url, params) => async (dispatch) => {
+  const responseParams = reduce(params, (result, value, key) => {
+    if (result === '?') {
+      return `${result}${key}=${value}`;
+    }
+
+    return `${result}&${key}=${value}`;
+  }, '?');
+
   dispatch({
-    type: FETCH_STACKOVERFLOW_QUESTIONS_REQUEST
+    type: FETCH_STACKOVERFLOW_REQUEST
   });
 
   try {
     const response =
-      await fetch(`${STACKOVERFLOW_BASE_API_URL}/questions?pagesize=${itemsCount}&order=desc&sort=activity&site=stackoverflow`);
+      await fetch(`${STACKOVERFLOW_BASE_API_URL}${url}${responseParams}&order=desc&sort=activity&site=stackoverflow`);
 
     if (response.ok) {
       const result = await response.json();
       const { items } = result;
 
       dispatch({
-        type: FETCH_STACKOVERFLOW_QUESTIONS_SUCCESS,
+        type: actionName,
         items
       });
     } else {
@@ -29,10 +37,10 @@ const fetchStackoverflowQuestions = itemsCount => async (dispatch) => {
     const errorObject = await error;
 
     dispatch({
-      type: FETCH_STACKOVERFLOW_QUESTIONS_FAILURE,
+      type: FETCH_STACKOVERFLOW_FAILURE,
       error: errorObject
     });
   }
 };
 
-export default fetchStackoverflowQuestions;
+export default getStackoverflow;
