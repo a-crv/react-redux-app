@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { compose, lifecycle, withProps, withState, withHandlers } from 'recompose';
+import { compose, lifecycle, withState, withHandlers } from 'recompose';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import get from 'lodash/get';
@@ -28,19 +28,26 @@ const createCustomCellWithLink = ({
   </Link>
 );
 
-const createCustomCellWithButton = param => dispatch => ({
+const createCustomCellWithButton = param => ({
   value,
   original,
-  ...otherProps
+  tdProps: {
+    rest: {
+      props: {
+        fetchQuestions,
+        toggleQuickToolbar
+      }
+    }
+  }
 }) => {
-  console.log('otherProps', otherProps);
   const authorID = get(original, param, null);
 
   return (
     <TableButton
-      onClick={() => dispatch(
+      onClick={() => fetchQuestions(
         FETCH_AUTHOR_QUESTIONS_STACKOVERFLOW,
-        `/users/${authorID}/questions`
+        `/users/${authorID}/questions`,
+        toggleQuickToolbar
       )}
     >
       {value}
@@ -49,10 +56,10 @@ const createCustomCellWithButton = param => dispatch => ({
 };
 /* eslint-enable */
 
-const createColumns = dispatch => [{
+const columns = [{
   Header: 'Автор вопроса',
   accessor: 'owner.display_name',
-  Cell: createCustomCellWithButton('owner.user_id')(dispatch)
+  Cell: createCustomCellWithButton('owner.user_id')
 }, {
   Header: 'Тема вопроса',
   accessor: 'title',
@@ -78,47 +85,32 @@ const createColumns = dispatch => [{
 
 const Questions = ({
   classes,
-  columns,
   questions,
+  fetchQuestions,
   isQuickToolbarVisible,
-  handleToggleQuickToolbar
+  handleToggleQuickToolbarClick
 }) => (
   <div className={classes.container}>
     <ReactTable
       data={questions}
       columns={columns}
       defaultPageSize={10}
-      getTdProps={(state, rowInfo, column, instance) => {
-        console.log('A Td Element was clicked!')
-        console.log('It was in this column:', column)
-        console.log('It was in this row:', rowInfo)
-        console.log('It was in this table instance:', instance)
-        return {
-          test: 'PREVED',
-          onClick: (e, handleOriginal) => {
-
-    
-            // IMPORTANT! React-Table uses onClick internally to trigger
-            // events like expanding SubComponents and pivots.
-            // By default a custom 'onClick' handler will override this functionality.
-            // If you want to fire the original onClick handler, call the
-            // 'handleOriginal' function.
-            if (handleOriginal) {
-              handleOriginal()
-            }
-          }
+      getTdProps={() => ({
+        props: {
+          fetchQuestions,
+          toggleQuickToolbar: handleToggleQuickToolbarClick
         }
-      }}
+      })}
     />
     <Button
       className={classes.button}
-      onClick={handleToggleQuickToolbar}
+      onClick={handleToggleQuickToolbarClick}
     >
       Open quick toolbar
     </Button>
     <QuickToolbar
       isOpen={isQuickToolbarVisible}
-      handleClose={handleToggleQuickToolbar}
+      handleClose={handleToggleQuickToolbarClick}
     />
   </div>
 );
@@ -129,11 +121,11 @@ Questions.defaultProps = {
 };
 
 Questions.propTypes = {
-  columns: PropTypes.array,
   questions: PropTypes.array,
   classes: PropTypes.object.isRequired,
+  fetchQuestions: PropTypes.func.isRequired,
   isQuickToolbarVisible: PropTypes.bool.isRequired,
-  handleToggleQuickToolbar: PropTypes.func.isRequired
+  handleToggleQuickToolbarClick: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({ stackoverflow: { questions } }) => ({
@@ -147,7 +139,7 @@ export default compose(
   }),
   withState('isQuickToolbarVisible', 'setQuickToolbar', false),
   withHandlers({
-    handleToggleQuickToolbar: ({
+    handleToggleQuickToolbarClick: ({
       isQuickToolbarVisible,
       setQuickToolbar
     }) => () =>
@@ -173,8 +165,5 @@ export default compose(
       }
     }
   }),
-  withProps(({ fetchQuestions }) => ({
-    columns: createColumns(fetchQuestions)
-  })),
   withStyles(styles)
 )(Questions);

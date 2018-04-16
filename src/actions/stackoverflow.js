@@ -10,7 +10,14 @@ const clearQuestions = () => ({
   type: CLEAR_QUESTIONS
 });
 
-const getStackoverflow = (actionName, url, params) => async (dispatch) => {
+const getStackoverflow = (actionName, url, params, cb) => async (dispatch) => {
+  /* eslint-disable */
+  if (typeof params === 'function' && typeof cb === 'undefined') {
+    cb = params;
+    params = undefined;
+  }
+  /* eslint-enable */
+
   const responseParams = reduce(params, (result, value, key) => {
     if (result === '?') {
       return `${result}${key}=${value}`;
@@ -35,6 +42,8 @@ const getStackoverflow = (actionName, url, params) => async (dispatch) => {
         type: actionName,
         items
       });
+
+      cb();
     } else {
       throw response.json();
     }
