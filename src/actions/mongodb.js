@@ -39,7 +39,7 @@ const fetchUsers = () => async (dispatch) => {
   });
 
   try {
-    const response = await fetch('/api/authorsasd');
+    const response = await fetch('/api/authors');
 
     if (response.ok) {
       const result = await response.json();

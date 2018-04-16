@@ -7,6 +7,7 @@ import { compose, withHandlers } from 'recompose';
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 import Button from 'material-ui/Button';
+import { clearQuestions } from '../../actions/stackoverflow';
 import Label from '../Label';
 import styles from './styles';
 
@@ -28,7 +29,7 @@ const Search = ({
         <Field
           label="Фильтр"
           component={Label}
-          name="filter"
+          name="body"
           type="text"
           normalize={lower}
         />
@@ -71,11 +72,13 @@ const mapStateToProps = (state) => {
 
 export default compose(
   withRouter,
-  connect(mapStateToProps),
+  connect(mapStateToProps, {
+    dispatchClearQuestions: clearQuestions
+  }),
   reduxForm({
     form: FORM_NAME,
     initialValues: {
-      filter: '',
+      body: '',
       pagesize: 1
     }
   }),
@@ -83,10 +86,12 @@ export default compose(
   withHandlers({
     handleFetchQuestionsClick: ({
       formValues,
+      dispatchClearQuestions,
       history: { push }
     }) => () => {
-      const { pagesize, filter } = formValues;
-      push(`/stackoverflow/questions?filter=${filter}&pagesize=${pagesize}`);
+      const { pagesize, body } = formValues;
+      dispatchClearQuestions();
+      push(`/stackoverflow/questions?body=${body}&pagesize=${pagesize}`);
     }
   })
 )(Search);

@@ -1,9 +1,9 @@
 import Search from './Search';
-import Question from './Question';
 import Questions from './Questions';
+import Answers from './Answers';
 
 export {
   Search,
-  Question,
+  Answers,
   Questions
 };

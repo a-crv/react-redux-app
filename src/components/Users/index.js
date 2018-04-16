@@ -10,8 +10,8 @@ const Users = ({
     return <div>{error}</div>;
   }
 
-  return users.map(user => (
-    <li key={user.id}>
+  return users.map((user, index) => (
+    <li key={`${user.name.lastName}_${`${index}`.padStart(3, '00')}`}>
       {`${user.name.firstName} ${user.name.lastName}`}
       <div>
         {user.aboutAuthor}

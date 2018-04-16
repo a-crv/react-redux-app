@@ -7,6 +7,9 @@ const styles = {
   },
   searchButton: {
     flexGrow: 1
+  },
+  button: {
+    marginTop: '20px'
   }
 };
 

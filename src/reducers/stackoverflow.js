@@ -1,5 +1,6 @@
 import get from 'lodash/get';
 import {
+  CLEAR_QUESTIONS,
   FETCH_STACKOVERFLOW_REQUEST,
   FETCH_STACKOVERFLOW_FAILURE,
   FETCH_QUESTIONS_STACKOVERFLOW,
@@ -21,17 +22,16 @@ const stackoverflow = (state = initialState, action) => {
   const error = get(action, 'error', null);
 
   switch (type) {
+    case CLEAR_QUESTIONS:
+      return {
+        ...state,
+        questions: []
+      };
+
     case FETCH_STACKOVERFLOW_REQUEST:
       return {
         ...state,
         fetching: true
-      };
-
-    case FETCH_AUTHOR_QUESTIONS_STACKOVERFLOW:
-      return {
-        ...state,
-        fetching: false,
-        authorQuestions: items
       };
 
     case FETCH_QUESTIONS_STACKOVERFLOW:
@@ -39,6 +39,13 @@ const stackoverflow = (state = initialState, action) => {
         ...state,
         fetching: false,
         questions: items
+      };
+
+    case FETCH_AUTHOR_QUESTIONS_STACKOVERFLOW:
+      return {
+        ...state,
+        fetching: false,
+        authorQuestions: items
       };
 
     case FETCH_ANSWERS_FOR_QUESTIONS_STACKOVERFLOW:

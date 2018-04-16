@@ -1,9 +1,14 @@
 import reduce from 'lodash/reduce';
 import {
+  CLEAR_QUESTIONS,
   FETCH_STACKOVERFLOW_REQUEST,
   FETCH_STACKOVERFLOW_FAILURE,
   STACKOVERFLOW_BASE_API_URL
 } from '../constants/actions';
+
+const clearQuestions = () => ({
+  type: CLEAR_QUESTIONS
+});
 
 const getStackoverflow = (actionName, url, params) => async (dispatch) => {
   const responseParams = reduce(params, (result, value, key) => {
@@ -43,4 +48,4 @@ const getStackoverflow = (actionName, url, params) => async (dispatch) => {
   }
 };
 
-export default getStackoverflow;
+export { clearQuestions, getStackoverflow };

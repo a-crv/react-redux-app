@@ -2,7 +2,10 @@ import SIDEBAR_WIDTH from '../../constants/ui';
 
 const styles = theme => ({
   toolbar: {
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    [theme.breakpoints.up('md')]: {
+      justifyContent: 'flex-end'
+    }
   },
   appBar: {
     position: 'absolute',
