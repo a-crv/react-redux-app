@@ -137,7 +137,7 @@ export default compose(
   connect(mapStateToProps, {
     fetchQuestions: getStackoverflow
   }),
-  setStatic('getDerivedStateFromProps', (nextProps, prevState) => {
+  setStatic('getDerivedStateFromProps', (nextProps) => {
     const {
       location: { search },
       fetchQuestions,

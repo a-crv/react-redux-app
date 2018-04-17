@@ -66,36 +66,36 @@ router
       res.json(author);
     });
   })
-  // .put((req, res) => {
-  //   console.log('PUT /authors/:id');
-  //   const authorID = req.params.id;
-  //   const { name, description, quantity } = req.body;
+  .put((req, res) => {
+    console.log('PUT /authors/:id');
+    const authorID = req.params.id;
+    const { name, description, quantity } = req.body;
 
-  //   Author.findOne({ id: authorID }, (error, author) => {
-  //     if (error) {
-  //       res.status(500).send(error);
-  //       return;
-  //     }
+    Author.findOne({ id: authorID }, (error, author) => {
+      if (error) {
+        res.status(500).send(error);
+        return;
+      }
 
-  //     if (author) {
-  //       const newAuthor = {
-  //         ...author,
-  //         name,
-  //         description,
-  //         quantity
-  //       };
+      if (author) {
+        const newAuthor = {
+          ...author,
+          name,
+          description,
+          quantity
+        };
 
-  //       newAuthor.save();
+        newAuthor.save();
 
-  //       res.json(newAuthor);
-  //       return;
-  //     }
+        res.json(newAuthor);
+        return;
+      }
 
-  //     res.status(404).json({
-  //       message: `Item with id ${authorID} was not found.`
-  //     });
-  //   });
-  // })
+      res.status(404).json({
+        message: `Item with id ${authorID} was not found.`
+      });
+    });
+  })
   .delete((req, res) => {
     console.log('DELETE /authors/:id');
     const authorID = req.params.id;

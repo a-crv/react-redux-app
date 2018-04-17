@@ -66,7 +66,7 @@ export default compose(
     fetchAnswersForQuestion: getStackoverflow
   }),
   lifecycle({
-    componentWillMount() {
+    componentDidMount() {
       const {
         location: { search },
         fetchAnswersForQuestion

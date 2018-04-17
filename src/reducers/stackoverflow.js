@@ -1,6 +1,6 @@
 import get from 'lodash/get';
 import {
-  CLEAR_QUESTIONS,
+  CLEAR_STACKOVERFLOW_QUESTIONS,
   FETCH_STACKOVERFLOW_REQUEST,
   FETCH_STACKOVERFLOW_FAILURE,
   FETCH_QUESTIONS_STACKOVERFLOW,
@@ -22,7 +22,7 @@ const stackoverflow = (state = initialState, action) => {
   const error = get(action, 'error', null);
 
   switch (type) {
-    case CLEAR_QUESTIONS:
+    case CLEAR_STACKOVERFLOW_QUESTIONS:
       return {
         ...state,
         questions: []

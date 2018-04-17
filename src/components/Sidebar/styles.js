@@ -1,4 +1,4 @@
-import SIDEBAR_WIDTH from '../../constants/ui';
+import { SIDEBAR_WIDTH } from '../../constants/ui';
 
 const styles = theme => ({
   drawer: {

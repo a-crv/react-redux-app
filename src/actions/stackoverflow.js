@@ -1,13 +1,13 @@
 import reduce from 'lodash/reduce';
 import {
-  CLEAR_QUESTIONS,
+  CLEAR_STACKOVERFLOW_QUESTIONS,
   FETCH_STACKOVERFLOW_REQUEST,
-  FETCH_STACKOVERFLOW_FAILURE,
-  STACKOVERFLOW_BASE_API_URL
+  FETCH_STACKOVERFLOW_FAILURE
 } from '../constants/actions';
+import { STACKOVERFLOW_BASE_API_URL } from '../constants/ui';
 
 const clearQuestions = () => ({
-  type: CLEAR_QUESTIONS
+  type: CLEAR_STACKOVERFLOW_QUESTIONS
 });
 
 const getStackoverflow = (actionName, url, params, cb) => async (dispatch) => {
