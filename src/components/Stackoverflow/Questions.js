@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { compose, lifecycle, withState, withHandlers } from 'recompose';
+import { compose, withState, withHandlers, setStatic } from 'recompose';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import get from 'lodash/get';
@@ -137,6 +137,26 @@ export default compose(
   connect(mapStateToProps, {
     fetchQuestions: getStackoverflow
   }),
+  setStatic('getDerivedStateFromProps', (nextProps, prevState) => {
+    const {
+      location: { search },
+      fetchQuestions,
+      questions
+    } = nextProps;
+
+    if (questions.length === 0) {
+      const params = new URLSearchParams(search);
+      const body = params.get('body');
+      const pagesize = params.get('pagesize');
+
+      fetchQuestions(
+        FETCH_QUESTIONS_STACKOVERFLOW,
+        '/search/advanced', { body, pagesize }
+      );
+    }
+
+    return null;
+  }),
   withState('isQuickToolbarVisible', 'setQuickToolbar', false),
   withHandlers({
     handleToggleQuickToolbarClick: ({
@@ -144,26 +164,6 @@ export default compose(
       setQuickToolbar
     }) => () =>
       setQuickToolbar(!isQuickToolbarVisible)
-  }),
-  lifecycle({
-    componentWillMount() {
-      const {
-        location: { search },
-        fetchQuestions,
-        questions
-      } = this.props;
-
-      if (questions.length === 0) {
-        const params = new URLSearchParams(search);
-        const body = params.get('body');
-        const pagesize = params.get('pagesize');
-
-        fetchQuestions(
-          FETCH_QUESTIONS_STACKOVERFLOW,
-          '/search/advanced', { body, pagesize }
-        );
-      }
-    }
   }),
   withStyles(styles)
 )(Questions);

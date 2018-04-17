@@ -2,6 +2,8 @@ import Home from 'material-ui-icons/Home';
 import QuestionAnswer from 'material-ui-icons/QuestionAnswer';
 import LocalPostOffice from 'material-ui-icons/LocalPostOffice';
 import Chat from 'material-ui-icons/Chat';
+import FiberDvr from 'material-ui-icons/FiberDvr';
+
 
 export default [
   {
@@ -27,5 +29,11 @@ export default [
     name: 'Chat',
     icon: Chat,
     linkTo: '/chat'
+  },
+  {
+    id: 4,
+    name: 'Animation',
+    icon: FiberDvr,
+    linkTo: '/animation'
   }
 ];
