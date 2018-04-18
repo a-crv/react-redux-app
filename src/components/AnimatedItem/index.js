@@ -26,26 +26,6 @@ const AnimatedItem = ({
 
 export default compose(
   withState('thisComponent', 'setThisComponent', null),
-  lifecycle({
-    constructor(props) {
-      const { setThisComponent } = props;
-      setThisComponent(this);
-    },
-    componentDidUpdate() {
-      const {
-        getElemCoordinates,
-        elemCoordinates,
-        animate
-      } = this.props;
-
-      const coordinates = getElemCoordinates();
-      const { x, y } = coordinates;
-      const dX = elemCoordinates.x - x;
-      const dY = elemCoordinates.y - y;
-
-      animate(dX, dY);
-    }
-  }),
   withHandlers({
     getElemCoordinates: ({ thisComponent }) => () => {
       const domNode = ReactDOM.findDOMNode(thisComponent);
@@ -67,6 +47,26 @@ export default compose(
           domNode.style.transition = 'transform 1400ms';
         });
       });
+    }
+  }),
+  lifecycle({
+    constructor(props) {
+      const { setThisComponent } = props;
+      setThisComponent(this);
+    },
+    componentDidUpdate() {
+      const {
+        getElemCoordinates,
+        elemCoordinates,
+        animate
+      } = this.props;
+
+      const coordinates = getElemCoordinates();
+      const { x, y } = coordinates;
+      const dX = elemCoordinates.x - x;
+      const dY = elemCoordinates.y - y;
+
+      animate(dX, dY);
     }
   }),
   setStatic('getDerivedStateFromProps', (nextProps) => {
