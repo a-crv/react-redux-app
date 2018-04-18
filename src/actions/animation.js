@@ -1,15 +1,6 @@
-import { IMPROVE_RATING, LOWER_RATING } from '../constants/actions';
-
-export function changeRating(id) {
+export default function updateRating(actionName, id) {
   return {
-    type: IMPROVE_RATING,
-    id
-  };
-}
-
-export function lowerRating(id) {
-  return {
-    type: LOWER_RATING,
+    type: actionName,
     id
   };
 }

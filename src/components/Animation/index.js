@@ -1,68 +1,77 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { compose, withHandlers, withProps } from 'recompose';
 import { connect } from 'react-redux';
-
-import {
-  improveRating,
-  lowerRating
-} from '../../actions/ImagesListActions';
+import { IMPROVE_RATING, LOWER_RATING } from '../../constants/actions';
+import updateRating from '../../actions/animation';
 import AnimatedItem from '../AnimatedItem';
 
-class App extends Component {
-  constructor(props) {
-    super(props);
+const data = [];
 
-    this.displayingImageItems = this.displayingImageItems.bind(this);
-    this.leftHandleClickImage = this.leftHandleClickImage.bind(this);
-    this.rightHandleClickImage = this.rightHandleClickImage.bind(this);
-  }
+function getRandomInRange(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
-  leftHandleClickImage(dispatch, id) {
-    return () => dispatch(improveRating(id));
-  }
+function sortImagesByRating(a, b) {
+  return b.rating - a.rating;
+}
 
-  rightHandleClickImage(dispatch, id) {
-    return (event) => {
-      event.preventDefault();
-      dispatch(lowerRating(id));
-    }
-  }
+for (let i = 0; i < 8; i += 1) {
+  const randomCount = getRandomInRange(1, 250);
 
-  displayingImageItems() {
-    const { imagesList: { data } } = this.props;
+  data.push({
+    id: i,
+    rating: 0,
+    url: `https://unsplash.it/200/200?image=${randomCount}`
+  });
+}
 
-    return data.map(item => (
+// newState.data.sort(sortImagesByRating);
+
+const Animation = ({
+  changedItem,
+  leftHandleClickImage,
+  rightHandleClickImage
+}) => {
+  const { id, rating } = changedItem;
+
+  return (
+    data.map(item => (
       <div className="app__intro-grid" key={item.id}>
         <AnimatedItem
-          leftHandleClick={this.leftHandleClickImage(this.props.dispatch, item.id)}
+          leftHandleClick={leftHandleClickImage(IMPROVE_RATING, item.id)}
+          rightHandleClick={rightHandleClickImage(LOWER_RATING, item.id)}
           rating={item.rating}
-          rightHandleClick={this.rightHandleClickImage(this.props.dispatch, item.id)}
           url={item.url}
         />
       </div>
-    ));
-  }
-
-  render() {
-    return (
-      <div className="app">
-        <div className="app__header">
-          <img src={logo} className="app__logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <div className="app__intro">
-          {this.displayingImageItems()}
-        </div>
-      </div>
-    );
-  }
-}
+    ))
+  );
+};
 
 function mapStateToProps(state) {
-  const { imagesList } = state;
+  const { changedItem } = state;
 
   return {
-    imagesList
+    changedItem
   };
 }
 
-export default connect(mapStateToProps)(App);
+export default compose(
+  connect(mapStateToProps, {
+    updateItemRating: updateRating
+  }),
+  withProps(),
+  withHandlers({
+    leftHandleClickImage: ({
+      updateItemRating
+    }) => (actionName, id) =>
+      () => updateItemRating(actionName, id),
+    rightHandleClickImage: ({
+      updateItemRating
+    }) => (actionName, id) =>
+      (event) => {
+        event.preventDefault();
+        updateItemRating(actionName, id);
+      }
+  })
+)(Animation);

@@ -2,31 +2,31 @@ import { IMPROVE_RATING, LOWER_RATING } from '../constants/actions';
 import createReducer from './utils/createReducer';
 
 const initialState = {
-  item: {
-    id: null,
-    rating: 0
-  }
+  id: null,
+  rating: 0
 };
 
-const animatedItems = createReducer(initialState, {
+const chandedItem = createReducer(initialState, {
   [IMPROVE_RATING](state, action) {
     const { id } = action;
+    const { rating } = state;
 
     return {
       ...state,
       id,
-      rating: 1
+      rating: rating + 1
     };
   },
   [LOWER_RATING](state, action) {
     const { id } = action;
+    const { rating } = state;
 
     return {
       ...state,
       id,
-      rating: -1
+      rating: rating - 1
     };
   }
 });
 
-export default animatedItems;
+export default chandedItem;
