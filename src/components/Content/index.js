@@ -7,7 +7,7 @@ import Home from './Home';
 import Stackoverflow from './Stackoverflow';
 import Posts from './Posts';
 import Chat from './Chat';
-// import AnimationContent from './Animation';
+import AnimationContent from './AnimationContent';
 import styles from './styles';
 
 const Content = ({ classes }) => (
@@ -20,7 +20,7 @@ const Content = ({ classes }) => (
       <Route path="/stackoverflow/answers" component={Answers} />
       <Route path="/posts" component={Posts} />
       <Route path="/chat" component={Chat} />
-      {/* <Route path="/animation" component={AnimationContent} /> */}
+      <Route path="/animation" component={AnimationContent} />
     </Switch>
   </main>
 );

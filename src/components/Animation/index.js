@@ -1,10 +1,13 @@
 import React from 'react';
-import { compose, withHandlers, withState, setStatic } from 'recompose';
+import PropsTypes from 'prop-types';
+import { compose, withHandlers, setStatic } from 'recompose';
 import { connect } from 'react-redux';
+import { withStyles } from 'material-ui/styles';
 import { getRandomInRange, sortImagesByRating } from '../../utils';
 import { IMPROVE_RATING, LOWER_RATING } from '../../constants/actions';
 import updateRating from '../../actions/animation';
 import AnimatedItem from '../AnimatedItem';
+import styles from './styles';
 
 const createItemsData = (count) => {
   const itemsData = [];
@@ -22,60 +25,71 @@ const createItemsData = (count) => {
   return itemsData;
 };
 
-// newState.data.sort(sortImagesByRating);
+class Animation extends React.Component {
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const {
+      chandedRatingItem: { id, rating }
+    } = nextProps;
+    const { itemsData } = prevState;
 
-const Animation = ({
-  changedItem,
-  leftHandleClickImage,
-  rightHandleClickImage
-}) => {
-  return (
-    data.map(item => (
-      <div className="app__intro-grid" key={item.id}>
-        <AnimatedItem
-          leftHandleClick={leftHandleClickImage(IMPROVE_RATING, item.id)}
-          rightHandleClick={rightHandleClickImage(LOWER_RATING, item.id)}
-          rating={item.rating}
-          url={item.url}
-        />
-      </div>
-    ))
-  );
+    const updateditemsData = itemsData.map(item => (
+      item.id === id
+        ? { ...item, rating }
+        : item
+    ));
+
+    const nextState = {
+      ...prevState,
+      itemsData: updateditemsData.sort(sortImagesByRating)
+    };
+
+    return nextState;
+  }
+
+  state = {
+    itemsData: createItemsData(7)
+  }
+
+  render() {
+    const {
+      classes,
+      leftHandleClickImage,
+      rightHandleClickImage
+    } = this.props;
+    const { itemsData } = this.state;
+
+    return (
+      itemsData.map(item => (
+        <div className={classes.item} key={item.id}>
+          <AnimatedItem
+            leftHandleClick={leftHandleClickImage(IMPROVE_RATING, item.id)}
+            rightHandleClick={rightHandleClickImage(LOWER_RATING, item.id)}
+            rating={item.rating}
+            url={item.url}
+          />
+        </div>
+      ))
+    );
+  }
+}
+
+Animation.propTypes = {
+  leftHandleClick: PropsTypes.func.isRequired,
+  rightHandleClick: PropsTypes.func.isRequired
 };
 
-function mapStateToProps(state) {
-  const { changedItem } = state;
+const mapStateToProps = (state) => {
+  const { chandedRatingItem } = state;
 
   return {
-    changedItem
+    chandedRatingItem
   };
-}
+};
 
 export default compose(
   connect(mapStateToProps, {
     updateItemRating: updateRating
   }),
-  setStatic('getDerivedStateFromProps', (nextProps) => {
-    const {
-      location: { search },
-      fetchQuestions,
-      questions
-    } = nextProps;
-
-    if (questions.length === 0) {
-      const params = new URLSearchParams(search);
-      const body = params.get('body');
-      const pagesize = params.get('pagesize');
-
-      fetchQuestions(
-        FETCH_QUESTIONS_STACKOVERFLOW,
-        '/search/advanced', { body, pagesize }
-      );
-    }
-
-    return null;
-  }),
-  withState('itemsData', 'setItemsData', createItemsData(23)),
   withHandlers({
     leftHandleClickImage: ({
       updateItemRating
@@ -88,5 +102,6 @@ export default compose(
         event.preventDefault();
         updateItemRating(actionName, id);
       }
-  })
+  }),
+  withStyles(styles)
 )(Animation);

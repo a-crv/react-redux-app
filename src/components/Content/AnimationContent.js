@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
+import Animation from '../Animation';
 import styles from './styles';
 
 const AnimationContent = ({ classes }) => (
   <div className={classes.content}>
     <h2 className={classes.title}>Animation</h2>
+    <Animation />
   </div>
 );
 
