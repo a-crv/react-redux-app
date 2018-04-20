@@ -3,28 +3,28 @@ import createReducer from './utils/createReducer';
 
 const initialState = {
   id: null,
-  rating: 0
+  ratingAction: 0
 };
 
 const chandedItem = createReducer(initialState, {
   [IMPROVE_RATING](state, action) {
     const { id } = action;
-    const { rating } = state;
+    const { ratingAction } = state;
 
     return {
       ...state,
       id,
-      rating: rating + 1
+      ratingAction
     };
   },
   [LOWER_RATING](state, action) {
     const { id } = action;
-    const { rating } = state;
+    const { ratingAction } = state;
 
     return {
       ...state,
       id,
-      rating: rating - 1
+      ratingAction
     };
   }
 });

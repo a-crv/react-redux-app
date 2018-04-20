@@ -1,12 +1,4 @@
 import React from 'react';
-import {
-  compose,
-  withState,
-  setStatic,
-  lifecycle,
-  withHandlers,
-  createSink
-} from 'recompose';
 import { withStyles } from 'material-ui/styles';
 import styles from './styles';
 
@@ -34,10 +26,6 @@ const animate = (dX, dY, ref) => {
 };
 
 class AnimatedItem extends React.Component {
-  // static getDerivedStateFromProps(nextProps, prevState) {
-  //   return null;
-  // }
-
   constructor(props) {
     super(props);
     this.myRef = React.createRef();
@@ -45,8 +33,6 @@ class AnimatedItem extends React.Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     const coordinates = getElemCoordinates(this.myRef);
-    // console.log('Snapshot', snapshot);
-    // console.log('Coordinates', coordinates);
     const dX = snapshot.x - coordinates.x;
     const dY = snapshot.y - coordinates.y;
 
@@ -55,10 +41,6 @@ class AnimatedItem extends React.Component {
 
   getSnapshotBeforeUpdate(prevProps, prevState) {
     const coordinates = getElemCoordinates(this.myRef);
-    // console.log(coordinates);
-    // const { x, y } = newcoordinates;
-    // const dX = coordinates.x - x;
-    // const dY = coordinates.y - y;
     return coordinates;
   }
 
@@ -88,13 +70,4 @@ class AnimatedItem extends React.Component {
   }
 }
 
-export default compose(
-  withStyles(styles),
-  // setStatic('getDerivedStateFromProps', (nextProps, prevState) => {
-  //   // const { getElemCoordinates } = nextProps;
-  //   // const coordinates = getElemCoordinates();
-  //   // return coordinates;
-
-  //   return null;
-  // }),
-)(AnimatedItem);
+export default withStyles(styles)(AnimatedItem);

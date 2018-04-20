@@ -34,7 +34,7 @@ class Animation extends React.Component {
 
     const updateditemsData = itemsData.map(item => (
       item.id === id
-        ? { ...item, rating }
+        ? { ...item, rating: item.rating + 1 }
         : item
     ));
 
@@ -73,9 +73,14 @@ class Animation extends React.Component {
   }
 }
 
+Animation.defaultProps = {
+  classes: {}
+};
+
 Animation.propTypes = {
-  leftHandleClick: PropsTypes.func.isRequired,
-  rightHandleClick: PropsTypes.func.isRequired
+  classes: PropsTypes.object,
+  leftHandleClickImage: PropsTypes.func.isRequired,
+  rightHandleClickImage: PropsTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => {
