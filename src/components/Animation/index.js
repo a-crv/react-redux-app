@@ -1,10 +1,9 @@
 import React from 'react';
 import PropsTypes from 'prop-types';
-import { compose, withHandlers, setStatic } from 'recompose';
+import { compose, withHandlers } from 'recompose';
 import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
 import { getRandomInRange, sortImagesByRating } from '../../utils';
-import { IMPROVE_RATING, LOWER_RATING } from '../../constants/actions';
 import updateRating from '../../actions/animation';
 import AnimatedItem from '../AnimatedItem';
 import styles from './styles';
@@ -25,22 +24,28 @@ const createItemsData = (count) => {
   return itemsData;
 };
 
+const updateItemsData = id => changeAction => (item) => {
+  if (item.id === id && changeAction === 'improve') {
+    return { ...item, rating: item.rating + 1 };
+  } else if (item.id === id && changeAction === 'drop') {
+    return { ...item, rating: item.rating - 1 };
+  }
+
+  return item;
+};
+
 class Animation extends React.Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     const {
-      chandedRatingItem: { id, rating }
+      chandedRatingItem: { id, changeAction }
     } = nextProps;
     const { itemsData } = prevState;
 
-    const updateditemsData = itemsData.map(item => (
-      item.id === id
-        ? { ...item, rating: item.rating + 1 }
-        : item
-    ));
+    const updatedItemsData = itemsData.map(item => updateItemsData(id)(changeAction)(item));
 
     const nextState = {
       ...prevState,
-      itemsData: updateditemsData.sort(sortImagesByRating)
+      itemsData: updatedItemsData.sort(sortImagesByRating)
     };
 
     return nextState;
@@ -62,8 +67,8 @@ class Animation extends React.Component {
       itemsData.map(item => (
         <div className={classes.item} key={item.id}>
           <AnimatedItem
-            leftHandleClick={leftHandleClickImage(IMPROVE_RATING, item.id)}
-            rightHandleClick={rightHandleClickImage(LOWER_RATING, item.id)}
+            leftHandleClick={leftHandleClickImage(item.id, 'improve')}
+            rightHandleClick={rightHandleClickImage(item.id, 'drop')}
             rating={item.rating}
             url={item.url}
           />

@@ -1,6 +1,11 @@
-export default function updateRating(actionName, id) {
+import { UPDATE_RATING } from '../constants/actions';
+
+export default function updateRating(id, changeAction) {
   return {
-    type: actionName,
-    id
+    type: UPDATE_RATING,
+    payload: {
+      id,
+      changeAction
+    }
   };
 }
