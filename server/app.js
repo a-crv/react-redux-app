@@ -6,16 +6,11 @@ const logger = require('morgan');
 const favicon = require('serve-favicon');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-
 const mongoose = require('mongoose');
-
-const authors = require('./rest/authors');
+const authorsRoute = require('./routes/authors');
+const authRoute = require('./routes/auth');
 
 const app = express();
-
-// view engine setup
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'jade');
 
 // mongodb connection
 const {
@@ -25,17 +20,23 @@ const {
     DB_PASSWORD: dbpassword
   }
 } = env;
-mongoose.connect(`mongodb://${dbuser}:${dbpassword}@ds141766.mlab.com:41766/${dbname}`);
+mongoose.connect(
+  `mongodb://${dbuser}:${dbpassword}@ds141766.mlab.com:41766/${dbname}`,
+  (err) => {
+    if (err) throw err;
+    global.console.log('Mongo connected');
+  }
+);
 
-// uncomment after placing your favicon in /public
-// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(cookieParser());
+app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api/authors', authors);
+app.use('/api', authorsRoute);
+app.use('/api', authRoute);
 app.get('/api/*', (req, res) => {
   res.status(400).send('Bad request');
 });
@@ -53,9 +54,9 @@ app.use((err, req, res, next) => {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+  res
+    .status(err.status || 500)
+    .json(err.message);
 });
 
 module.exports = app;

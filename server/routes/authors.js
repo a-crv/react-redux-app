@@ -5,7 +5,7 @@ const router = express.Router();
 const Author = require('../models/author');
 
 router
-  .route('/')
+  .route('/authors')
   .get((req, res) => {
     console.log('GET /authors');
     Author.find((error, authors) => {
@@ -42,7 +42,7 @@ router
   });
 
 router
-  .route('/:name')
+  .route('/authors/:name')
   .get((req, res) => {
     console.log('GET /authors/:name');
     const {
