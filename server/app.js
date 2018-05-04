@@ -24,7 +24,7 @@ mongoose.connect(
   `mongodb://${dbuser}:${dbpassword}@ds141766.mlab.com:41766/${dbname}`,
   (err) => {
     if (err) throw err;
-    global.console.log('Mongo connected');
+    global.console.log('Mongo connected!');
   }
 );
 
