@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-
 const User = require('../models/user');
 
 module.exports = async (req, res, next) => {
@@ -7,6 +6,8 @@ module.exports = async (req, res, next) => {
 
   try {
     const user = await User.findOne({ login });
+    const { _id: id } = user;
+
     if (!user) {
       const error = {
         status: 401,
@@ -18,15 +19,19 @@ module.exports = async (req, res, next) => {
 
     const result = await user.comparePassword(password);
     if (!result) {
-      const warning = {
+      const error = {
         status: 401,
         message: 'Authentication failed. Wrong password.'
       };
 
-      throw warning;
+      throw error;
     }
 
-    return res.json(user);
+    const token = await jwt.sign({ _id: id }, 'secret', {
+      expiresIn: 604800 // 1 week
+    });
+
+    return res.json(token);
   } catch (error) {
     return next(error);
   }
