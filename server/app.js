@@ -13,15 +13,16 @@ const authRoute = require('./routes/auth');
 const app = express();
 
 // mongodb connection
-const {
-  parsed: {
-    DB_NAME: dbname,
-    DB_USERNAME: dbuser,
-    DB_PASSWORD: dbpassword
-  }
-} = env;
+// const {
+//   parsed: {
+//     DB_NAME: dbname,
+//     DB_USERNAME: dbuser,
+//     DB_PASSWORD: dbpassword
+//   }
+// } = env;
 mongoose.connect(
-  `mongodb://${dbuser}:${dbpassword}@ds141766.mlab.com:41766/${dbname}`,
+  'mongodb://localhost/mydb',
+  // `mongodb://${dbuser}:${dbpassword}@ds141766.mlab.com:41766/${dbname}`,
   (err) => {
     if (err) throw err;
     global.console.log('Mongo connected!');
