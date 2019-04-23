@@ -1,5 +1,6 @@
 import React from 'react';
-import { withStyles } from 'material-ui/styles';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 import styles from './styles';
 
 const getElemCoordinates = (ref) => {
@@ -39,7 +40,7 @@ class AnimatedItem extends React.Component {
     animate(dX, dY, this.myRef);
   }
 
-  getSnapshotBeforeUpdate(prevProps, prevState) {
+  getSnapshotBeforeUpdate() {
     const coordinates = getElemCoordinates(this.myRef);
     return coordinates;
   }
@@ -69,5 +70,13 @@ class AnimatedItem extends React.Component {
     );
   }
 }
+
+AnimatedItem.propTypes = {
+  url: PropTypes.string.isRequired,
+  rating: PropTypes.string.isRequired,
+  classes: PropTypes.string.isRequired,
+  leftHandleClick: PropTypes.func.isRequired,
+  rightHandleClick: PropTypes.func.isRequired
+};
 
 export default withStyles(styles)(AnimatedItem);

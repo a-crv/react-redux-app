@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import Content from '../../components/Content';

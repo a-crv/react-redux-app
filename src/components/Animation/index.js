@@ -2,7 +2,7 @@ import React from 'react';
 import PropsTypes from 'prop-types';
 import { compose, withHandlers } from 'recompose';
 import { connect } from 'react-redux';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import { getRandomInRange, sortImagesByRating } from '../../utils';
 import updateRating from '../../actions/animation';
 import AnimatedItem from '../AnimatedItem';

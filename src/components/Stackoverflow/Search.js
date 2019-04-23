@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import { Field, reduxForm, getFormValues } from 'redux-form';
 import { withRouter } from 'react-router-dom';
 import { compose, withHandlers } from 'recompose';
-import { withStyles } from 'material-ui/styles';
-import Grid from 'material-ui/Grid';
-import Button from 'material-ui/Button';
+import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
 import { clearQuestions } from '../../actions/stackoverflow';
 import Label from '../Label';
 import styles from './styles';
@@ -45,7 +45,7 @@ const Search = ({
       </Grid>
       <Grid item xs={12}>
         <Button
-          variant="raised"
+          variant="contained"
           color="primary"
           className={classes.searchButton}
           onClick={handleFetchQuestionsClick}

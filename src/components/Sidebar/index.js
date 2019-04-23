@@ -3,12 +3,15 @@ import PropTypes from 'prop-types';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { withStyles } from 'material-ui/styles';
-import Hidden from 'material-ui/Hidden';
-import Drawer from 'material-ui/Drawer';
-import Divider from 'material-ui/Divider';
-import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
-import { CircularProgress } from 'material-ui/Progress';
+import { withStyles } from '@material-ui/core/styles';
+import Hidden from '@material-ui/core/Hidden';
+import Drawer from '@material-ui/core/Drawer';
+import Divider from '@material-ui/core/Divider';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { handleDrawerToggleEnhancer } from '../../enhancers';
 import styles from './styles';
 import sidebarItems from './sidebarItems';
@@ -43,6 +46,7 @@ const Sidebar = ({
               component={Link}
               key={sidebarItem.id}
               to={sidebarItem.linkTo}
+              onClick={handleDrawerToggle}
             >
               <ListItemIcon>
                 <sidebarItem.icon />

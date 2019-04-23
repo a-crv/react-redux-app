@@ -1,11 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { compose, withState, withHandlers, setStatic } from 'recompose';
+import {
+  compose,
+  withState,
+  withHandlers,
+  setStatic
+} from 'recompose';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import get from 'lodash/get';
-import { withStyles } from 'material-ui/styles';
-import Button from 'material-ui/Button';
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import {
   FETCH_QUESTIONS_STACKOVERFLOW,
   FETCH_AUTHOR_QUESTIONS_STACKOVERFLOW
@@ -73,14 +78,13 @@ const columns = [{
   accessor: 'tags',
   Cell: ({
     value: tags
-  }) =>
-    tags.map((tag, i) => (
-      <span
-        key={`${tag}_${`${i}`.padStart(3, '00')}`}
-      >
-        #{tag}
-      </span>
-    ))
+  }) => tags.map((tag, i) => (
+    <span
+      key={`${tag}_${`${i}`.padStart(3, '00')}`}
+    >
+      #{tag}
+    </span>
+  ))
 }];
 
 const Questions = ({

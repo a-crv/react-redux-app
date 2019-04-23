@@ -8,10 +8,6 @@
   "parser": "babel-eslint",
   "extends": "airbnb",
   "rules": {
-    "linebreak-style": [
-      "warn",
-      "windows"
-    ],
     "comma-dangle": [
       "warn",
       "never"
